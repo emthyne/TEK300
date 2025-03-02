@@ -137,11 +137,11 @@ library(vcd) # Visualize categorical data using association plots
 base_data <- read_csv("https://www.uky.edu/~clthyn2/base_data.csv") # Reading in base data. 
 
 # 0. Country codes (Thyne 2022). 
-url <- "https://www.uky.edu/~clthyn2/replace_ccode_country.xls" # Bringing in ccodes to merge. 
-destfile <- "replace_ccode_country.xls"
-curl::curl_download(url, destfile)
-ccodes <- read_excel(destfile)
-rm(url, destfile)
+emp_file <- tempfile(fileext = ".xls") # Creates a temporary location. 
+curl::curl_download("https://www.uky.edu/~clthyn2/replace_ccode_country.xls", temp_file) # Downloads file to temporary location. 
+ccodes <- read_excel(temp_file) # Reads the file from temporary location. 
+unlink(temp_file) # Cleans working directory. 
+rm(temp_file)
 
 # -------------------------- Political Data ------------------------------ #
 
